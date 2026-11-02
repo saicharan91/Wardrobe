@@ -7,19 +7,23 @@ A clean, modern, and uncluttered e-commerce website for timeless fashion garment
 
 ## 🏛️ Architecture
 
-A streamlined 3-page store built with pure vanilla HTML, modern CSS, and JavaScript.
+A streamlined multi-page store built with pure vanilla HTML, modern CSS, and JavaScript.
 
 ```
 Wardrobe/
-├── index.html          # Storefront with category tabs & product grid
-├── product.html        # Clean product detail page with gallery & options
-├── cart.html           # Shopping bag with quantities & order summary
+├── index.html              # Storefront with hero banner, category tabs & product grid
+├── product.html            # Clean product detail page with gallery & options
+├── cart.html               # Shopping bag with quantities & order summary
+├── checkout.html           # Express dummy checkout with address & payment options
+├── order-confirmation.html # Order receipt & thank-you page
+├── 404.html                # Automatic redirect for invalid / legacy URLs
+├── .nojekyll               # Bypasses Jekyll for GitHub Pages
 ├── css/
-│   └── styles.css      # Clean, minimal stylesheet (~450 lines)
+│   └── styles.css          # Clean, minimal stylesheet
 ├── js/
-│   ├── products.js     # Curated 16-product catalog
-│   └── store.js        # Unified cart, filtering, and page rendering logic
-└── README.md           # Documentation
+│   ├── products.js         # Curated 16-product catalog
+│   └── store.js            # Unified store engine (cart, checkout, auth, rendering)
+└── README.md               # Documentation
 ```
 
 ---
@@ -27,7 +31,8 @@ Wardrobe/
 ## 🌟 Key Features
 
 ### 1. Storefront (`index.html`)
-- **Clean Header**: Sticky minimal navigation with logo and live shopping bag count.
+- **Minimal Header**: Sticky navigation with brand logo, account login modal trigger, and live bag badge.
+- **Hero Banner**: Crisp visual hero highlighting the Autumn / Winter capsule with quick action buttons.
 - **Category Tabs**: Filter between `All`, `Outerwear`, `Tailoring`, `Knitwear`, `Dresses`, and `Accessories`.
 - **Responsive Product Grid**: 4 columns on desktop, 3 on tablets, 2 on mobile devices.
 - **One-Click Add to Bag**: Instant feedback button that adds garments directly to the shopping cart.
@@ -44,10 +49,19 @@ Wardrobe/
 - **Itemized Overview**: Shows product image, title, selected color, selected size, and unit price.
 - **Quantity Controls**: Adjust item counts or remove items with one click.
 - **Order Summary**: Subtotal, complimentary shipping notice, and estimated order total.
-- **Persistent State**: Cart items are automatically saved in `localStorage`.
-- **Friendly Empty State**: Helpful message and quick link back to shop when empty.
+- **Direct Checkout Link**: Smoothly proceeds to the express checkout page.
 
-### 4. Robust Design
+### 4. Express Checkout & Thank-You Flow (`checkout.html` & `order-confirmation.html`)
+- **Express Checkout**: Contact details, shipping address, and simulated payment methods (Credit Card, Apple Pay, Pay on Delivery).
+- **Auto-Fill Demo Info**: One-click demo filler for immediate end-to-end testing.
+- **Thank-You Confirmation**: Generates a unique order reference (`#WD-XXXXXX`), order summary breakdown, and shipping details.
+
+### 5. Account & Dummy Login
+- **Universal Sign-In Modal**: Available on every page header.
+- **One-Click Demo Login**: Sign in as demo member (`Alex M.`), which personalizes the header navigation.
+- **Sign Out Control**: Clicking the account pill prompts to sign out.
+
+### 6. Robust Design & Tracking
 - **Zero Heavy Dependencies**: Pure system sans-serif font stack and vanilla JavaScript.
 - **Graceful Fallbacks**: Built-in SVG vector generator ensures images always render even when offline.
 - **Adobe Launch Integrated**: Script tag included across all HTML `<head>` tags.

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — WARDROBE</title>
+  <meta name="description" content="Secure and streamlined checkout for WARDROBE garments.">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Adobe Experience Platform Launch -->
+  <script src="https://assets.adobedtm.com/6268dc4b6b26/a453705a8907/launch-39f5c9d23182-development.min.js" async></script>
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="WARDROBE Home">WARDROBE</a>
+      <nav class="site-nav">
+        <a href="cart.html" class="nav-link">← Return to Bag</a>
+        <button type="button" class="nav-user-btn" id="navAccountBtn" aria-label="Sign In or View Account">Sign In</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Checkout Container -->
+  <main class="container">
+    <div class="cart-title-row" style="margin-bottom: 0.5rem;">
+      <h1>Express Checkout</h1>
+    </div>
+
+    <div id="checkoutContainer">
+      <!-- Dynamically rendered and handled by store.js -->
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 WARDROBE. All rights reserved.</span>
+      <span>Encrypted 256-Bit SSL Checkout • Complimentary Express Delivery</span>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+      <h2 class="modal-title" id="modalTitle">Sign In to WARDROBE</h2>
+      <p class="modal-sub">Access your orders, saved sizes, and private archive.</p>
+      
+      <form id="loginForm">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem;" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="name@example.com" value="client@wardrobe.com" />
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem;" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••" value="demo1234" />
+        </div>
+        <button type="submit" class="checkout-btn" style="height: 44px; margin-top: 0; margin-bottom: 0.75rem;">
+          Sign In
+        </button>
+        <button type="button" class="btn-secondary-hero" id="btnDemoLogin" style="width: 100%; height: 44px;">
+          One-Click Demo Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/store.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 /**
  * WARDROBE — Streamlined Store Engine
- * Cart Management, Product Grid, PDP Gallery & Cart Page Rendering
+ * Cart Management, Product Grid, PDP Gallery, Checkout, Order Confirmation & Auth
  */
 
 (function () {
@@ -15,6 +15,8 @@
 
   // --- Cart State Management ---
   const CART_KEY = 'wardrobe_cart';
+  const USER_KEY = 'wardrobe_user';
+  const ORDER_KEY = 'wardrobe_last_order';
 
   function getCart() {
     try {
@@ -94,6 +96,93 @@
     document.querySelectorAll('.cart-badge').forEach(badge => {
       badge.textContent = count;
     });
+  }
+
+  // --- Auth / User State ---
+  function getUser() {
+    try {
+      return JSON.parse(localStorage.getItem(USER_KEY)) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setUser(userData) {
+    if (userData) {
+      localStorage.setItem(USER_KEY, JSON.stringify(userData));
+    } else {
+      localStorage.removeItem(USER_KEY);
+    }
+    updateUserNav();
+  }
+
+  function updateUserNav() {
+    const user = getUser();
+    document.querySelectorAll('.nav-user-btn').forEach(btn => {
+      if (user && user.loggedIn) {
+        btn.textContent = user.name || 'Account';
+        btn.title = `Signed in as ${user.email} (Click to sign out)`;
+      } else {
+        btn.textContent = 'Sign In';
+        btn.title = 'Sign In / Account';
+      }
+    });
+  }
+
+  function initAuthModal() {
+    updateUserNav();
+
+    const backdrop = document.getElementById('loginModal');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const form = document.getElementById('loginForm');
+    const demoBtn = document.getElementById('btnDemoLogin');
+
+    function openModal() {
+      const user = getUser();
+      if (user && user.loggedIn) {
+        if (confirm(`You are signed in as ${user.email}. Do you want to sign out?`)) {
+          setUser(null);
+          showToast('Signed out successfully');
+        }
+        return;
+      }
+      if (backdrop) backdrop.classList.add('open');
+    }
+
+    function closeModal() {
+      if (backdrop) backdrop.classList.remove('open');
+    }
+
+    document.querySelectorAll('.nav-user-btn').forEach(btn => {
+      btn.addEventListener('click', openModal);
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeModal();
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const namePart = email.split('@')[0] || 'Member';
+        const capitalized = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+        setUser({ email, name: capitalized, loggedIn: true });
+        closeModal();
+        showToast(`Welcome, ${capitalized}!`);
+      });
+    }
+
+    if (demoBtn) {
+      demoBtn.addEventListener('click', () => {
+        setUser({ email: 'client@wardrobe.com', name: 'Alex M.', loggedIn: true });
+        closeModal();
+        showToast('Signed in as Alex M. (Demo Account)');
+      });
+    }
   }
 
   // --- Toast Notification ---
@@ -413,7 +502,6 @@
         .filter(Boolean)
         .slice(0, 4);
 
-      // If no relatedIds, pick products from same category
       const displayItems = related.length ? related : PRODUCTS.filter(p => p.id !== product.id).slice(0, 4);
 
       relatedGrid.innerHTML = displayItems.map(item => `
@@ -543,9 +631,9 @@
             <span>Estimated Total</span>
             <span>${formatMoney(subtotal)}</span>
           </div>
-          <button type="button" class="checkout-btn" id="btnCheckout">
+          <a href="checkout.html" class="checkout-btn" style="text-decoration: none;">
             Proceed to Checkout
-          </button>
+          </a>
           <a href="index.html" class="continue-shopping-link">
             ← Continue Shopping
           </a>
@@ -575,19 +663,312 @@
         removeFromCart(idx);
       });
     });
+  }
 
-    // Checkout button demo action
-    const checkoutBtn = document.getElementById('btnCheckout');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', () => {
-        alert('Thank you for exploring WARDROBE! This is a demo checkout order.');
+  // ==========================================================================
+  // Checkout Page (checkout.html)
+  // ==========================================================================
+  function initCheckoutPage() {
+    const container = document.getElementById('checkoutContainer');
+    if (!container) return;
+
+    const cart = getCart();
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="cart-empty">
+          <h2>Your Bag is Empty</h2>
+          <p>Please add items to your shopping bag before proceeding to checkout.</p>
+          <a href="index.html" class="checkout-btn" style="max-width: 240px; margin: 0 auto; text-decoration: none;">
+            Explore Collection
+          </a>
+        </div>
+      `;
+      return;
+    }
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const user = getUser();
+
+    container.innerHTML = `
+      <div class="checkout-layout">
+        <!-- Form Column -->
+        <form id="checkoutForm" class="checkout-form">
+          <!-- 1. Contact -->
+          <section class="checkout-section">
+            <div class="checkout-section-title">
+              <span>1. Contact Details</span>
+              <button type="button" class="demo-fill-btn" id="btnFillDemo">Auto-fill Demo Info</button>
+            </div>
+            <div class="checkout-grid">
+              <div class="checkout-col-full">
+                <label class="checkout-field-label" for="custEmail">Email Address</label>
+                <input type="email" id="custEmail" required placeholder="name@example.com" value="${user ? user.email : ''}" />
+              </div>
+              <div class="checkout-col-full">
+                <label class="checkout-field-label" for="custPhone">Phone Number</label>
+                <input type="tel" id="custPhone" required placeholder="+1 (555) 019-2834" />
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. Shipping Address -->
+          <section class="checkout-section">
+            <h2 class="checkout-section-title">2. Shipping Address</h2>
+            <div class="checkout-grid">
+              <div>
+                <label class="checkout-field-label" for="shipFirst">First Name</label>
+                <input type="text" id="shipFirst" required placeholder="Elena" value="${user && user.name ? user.name.split(' ')[0] : ''}" />
+              </div>
+              <div>
+                <label class="checkout-field-label" for="shipLast">Last Name</label>
+                <input type="text" id="shipLast" required placeholder="Rostova" value="${user && user.name && user.name.split(' ')[1] ? user.name.split(' ')[1] : ''}" />
+              </div>
+              <div class="checkout-col-full">
+                <label class="checkout-field-label" for="shipAddr">Street Address</label>
+                <input type="text" id="shipAddr" required placeholder="428 Mercer Street, Floor 4" />
+              </div>
+              <div>
+                <label class="checkout-field-label" for="shipCity">City</label>
+                <input type="text" id="shipCity" required placeholder="New York" />
+              </div>
+              <div>
+                <label class="checkout-field-label" for="shipPostal">Postal / ZIP Code</label>
+                <input type="text" id="shipPostal" required placeholder="10013" />
+              </div>
+              <div class="checkout-col-full">
+                <label class="checkout-field-label" for="shipCountry">Country</label>
+                <select id="shipCountry" required>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="France">France</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Japan">Japan</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. Payment Method -->
+          <section class="checkout-section">
+            <h2 class="checkout-section-title">3. Payment Method (Demo)</h2>
+            <div class="payment-pill-tabs">
+              <button type="button" class="payment-tab active" data-tab="card">Credit Card</button>
+              <button type="button" class="payment-tab" data-tab="apple">Apple Pay</button>
+              <button type="button" class="payment-tab" data-tab="cod">Pay on Delivery</button>
+            </div>
+
+            <div id="cardFields" class="checkout-grid">
+              <div class="checkout-col-full">
+                <label class="checkout-field-label" for="cardNum">Card Number</label>
+                <input type="text" id="cardNum" required placeholder="4242 •••• •••• 4242" value="4242 4242 4242 4242" />
+              </div>
+              <div>
+                <label class="checkout-field-label" for="cardExp">Expiry Date</label>
+                <input type="text" id="cardExp" required placeholder="MM/YY" value="12/28" />
+              </div>
+              <div>
+                <label class="checkout-field-label" for="cardCvc">CVC</label>
+                <input type="text" id="cardCvc" required placeholder="CVC" value="345" />
+              </div>
+            </div>
+          </section>
+
+          <button type="submit" class="checkout-btn" style="height: 52px; font-size: 1rem;">
+            Place Order (${formatMoney(subtotal)})
+          </button>
+        </form>
+
+        <!-- Right Summary Column -->
+        <aside class="cart-summary-box">
+          <h2 class="cart-summary-title">Order Items (${cart.reduce((s, i) => s + i.quantity, 0)})</h2>
+          
+          <div class="checkout-items-list">
+            ${cart.map(item => `
+              <div class="checkout-item-compact">
+                <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='${getPlaceholderSvg(item.name, item.category)}';" />
+                <div class="checkout-item-compact-info">
+                  <div class="checkout-item-compact-title">${item.name}</div>
+                  <div class="checkout-item-compact-meta">
+                    Qty: ${item.quantity} ${item.color ? `• ${item.color}` : ''} ${item.size ? `• ${item.size}` : ''}
+                  </div>
+                </div>
+                <div class="checkout-item-compact-price">${formatMoney(item.price * item.quantity)}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span>${formatMoney(subtotal)}</span>
+          </div>
+          <div class="summary-line">
+            <span>Express Courier</span>
+            <span>Complimentary</span>
+          </div>
+          <div class="summary-line total">
+            <span>Total to Pay</span>
+            <span>${formatMoney(subtotal)}</span>
+          </div>
+        </aside>
+      </div>
+    `;
+
+    // Demo fill button
+    const demoFillBtn = document.getElementById('btnFillDemo');
+    if (demoFillBtn) {
+      demoFillBtn.addEventListener('click', () => {
+        document.getElementById('custEmail').value = 'elena.rostova@atelier.com';
+        document.getElementById('custPhone').value = '+1 (212) 555-0198';
+        document.getElementById('shipFirst').value = 'Elena';
+        document.getElementById('shipLast').value = 'Rostova';
+        document.getElementById('shipAddr').value = '428 Mercer Street, Loft 6';
+        document.getElementById('shipCity').value = 'New York';
+        document.getElementById('shipPostal').value = '10013';
+        document.getElementById('shipCountry').value = 'United States';
+        showToast('Demo checkout information filled');
       });
     }
+
+    // Payment tab switcher
+    container.querySelectorAll('.payment-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        container.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const cardFields = document.getElementById('cardFields');
+        if (tab.getAttribute('data-tab') === 'card') {
+          if (cardFields) cardFields.style.display = 'grid';
+        } else {
+          if (cardFields) cardFields.style.display = 'none';
+        }
+      });
+    });
+
+    // Form submit -> generate order & redirect
+    const form = document.getElementById('checkoutForm');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const orderId = 'WD-' + Math.floor(100000 + Math.random() * 900000);
+        const orderData = {
+          orderId,
+          date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          items: cart,
+          subtotal,
+          email: document.getElementById('custEmail').value,
+          customerName: `${document.getElementById('shipFirst').value} ${document.getElementById('shipLast').value}`,
+          shippingAddress: `${document.getElementById('shipAddr').value}, ${document.getElementById('shipCity').value}, ${document.getElementById('shipPostal').value}, ${document.getElementById('shipCountry').value}`
+        };
+
+        try {
+          localStorage.setItem(ORDER_KEY, JSON.stringify(orderData));
+          localStorage.removeItem(CART_KEY);
+        } catch (err) {
+          console.error('Failed to store order:', err);
+        }
+
+        updateCartBadge();
+        window.location.href = 'order-confirmation.html';
+      });
+    }
+  }
+
+  // ==========================================================================
+  // Order Confirmation (Thank-You) Page (order-confirmation.html)
+  // ==========================================================================
+  function initConfirmationPage() {
+    const container = document.getElementById('confirmationContainer');
+    if (!container) return;
+
+    let order = null;
+    try {
+      order = JSON.parse(localStorage.getItem(ORDER_KEY));
+    } catch (e) {
+      order = null;
+    }
+
+    if (!order) {
+      // Sample mock order if opened directly
+      order = {
+        orderId: 'WD-782914',
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        items: [
+          {
+            name: 'Double-Faced Cashmere Wrap Coat',
+            price: 1150,
+            quantity: 1,
+            color: 'Oatmeal Camel',
+            size: 'S'
+          }
+        ],
+        subtotal: 1150,
+        email: 'client@wardrobe.com',
+        customerName: 'Elena Rostova',
+        shippingAddress: '428 Mercer Street, New York, 10013, United States'
+      };
+    }
+
+    container.innerHTML = `
+      <div class="confirmation-card">
+        <div class="conf-check-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        
+        <h1 class="conf-title">Thank You For Your Order</h1>
+        <p class="conf-order-id">Order Reference: <strong>#${order.orderId}</strong> • Placed on ${order.date}</p>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 2rem;">
+          A digital invoice and order confirmation has been dispatched to <strong>${order.email}</strong>.
+        </p>
+
+        <div class="conf-details-box">
+          <div class="conf-row">
+            <span style="font-weight: 600;">Recipient</span>
+            <span>${order.customerName}</span>
+          </div>
+          <div class="conf-row">
+            <span style="font-weight: 600;">Shipping Destination</span>
+            <span style="text-align: right; max-width: 60%;">${order.shippingAddress}</span>
+          </div>
+          <div class="conf-row">
+            <span style="font-weight: 600;">Shipping Method</span>
+            <span>Complimentary Express Courier</span>
+          </div>
+          <div class="conf-row" style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-top: 0.5rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+            <span>Total Paid</span>
+            <span>${formatMoney(order.subtotal)}</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 2rem; text-align: left;">
+          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem;">Garments Ordered</h3>
+          <div style="border-top: 1px solid var(--border);">
+            ${order.items.map(item => `
+              <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;">
+                <div>
+                  <div style="font-weight: 600;">${item.name}</div>
+                  <div style="color: var(--text-muted); font-size: 0.78rem;">Qty: ${item.quantity} ${item.color ? `• ${item.color}` : ''} ${item.size ? `• ${item.size}` : ''}</div>
+                </div>
+                <div style="font-weight: 600;">${formatMoney(item.price * item.quantity)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <a href="index.html" class="checkout-btn" style="text-decoration: none; max-width: 260px; margin: 0 auto;">
+          Continue Shopping
+        </a>
+      </div>
+    `;
   }
 
   // --- Initializer ---
   document.addEventListener('DOMContentLoaded', () => {
     updateCartBadge();
+    initAuthModal();
 
     if (document.getElementById('productsGrid')) {
       initStorefront();
@@ -600,14 +981,23 @@
     if (document.getElementById('cartPageContainer')) {
       renderCartPage();
     }
+
+    if (document.getElementById('checkoutContainer')) {
+      initCheckoutPage();
+    }
+
+    if (document.getElementById('confirmationContainer')) {
+      initConfirmationPage();
+    }
   });
 
-  // Export functions to window if needed
+  // Export functions to window
   window.WardrobeStore = {
     addToCart,
     getCart,
     updateCartQty,
-    removeFromCart
+    removeFromCart,
+    getUser,
+    setUser
   };
 })();
-
