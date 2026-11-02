@@ -1,126 +1,53 @@
 # W A R D R O B E
-### Atelier de Haute Confection & Ready-to-Wear
+### Minimalist E-Commerce Storefront
 
-A comprehensive, production-grade, multi-page minimalist luxury e-commerce platform. Inspired by the quiet luxury design languages of *The Row*, *Lemaire*, *Totême*, *Jil Sander*, and *Céline*.
+A clean, modern, and uncluttered e-commerce website for timeless fashion garments and accessories. Designed with a pure white background, crisp imagery, and intuitive navigation.
 
 ---
 
-## 🏛️ Multi-Page Architecture
+## 🏛️ Architecture
 
-This is a complete, fully functional multi-page web application with interconnected navigation, shared persistent state (`localStorage`), multi-currency conversion, and responsive luxury styling.
+A streamlined 3-page store built with pure vanilla HTML, modern CSS, and JavaScript.
 
 ```
 Wardrobe/
-├── index.html               # Home storefront & editorial storytelling
-├── shop.html                # Full collection catalog with multi-criteria sidebar filters
-├── product.html             # Detailed PDP (gallery zoom, size guide, reviews, cross-sell)
-├── lookbook.html            # Campaign lookbook with interactive radar hotspots
-├── atelier.html             # Maison manifesto, zero-waste cutting & sustainability
-├── cart.html                # Dedicated shopping bag with gift options & tax calculation
-├── checkout.html            # Multi-step checkout with delivery validation & payment mock
-├── order-confirmation.html  # Order confirmation receipt with tracking waybill & print invoice
-├── wishlist.html            # Saved archives with "Move All to Bag" batch action
-├── contact.html             # Flagship salons (Paris, Tokyo, NY, London, Zurich) & appointment booking
+├── index.html          # Storefront with category tabs & product grid
+├── product.html        # Clean product detail page with gallery & options
+├── cart.html           # Shopping bag with quantities & order summary
 ├── css/
-│   └── styles.css           # Complete luxury design system & responsive styling
+│   └── styles.css      # Clean, minimal stylesheet (~450 lines)
 ├── js/
-│   ├── products.js          # Catalog database (16 garments, 4 lookbooks, 5 boutiques)
-│   ├── core.js              # Shared state engine (Cart, Wishlist, Currency, Drawers, Search)
-│   ├── shop.js              # Catalog filtering, multi-criteria sidebar, sorting, pagination
-│   ├── product-detail.js    # PDP controller, query param reader, size modal, reviews
-│   ├── cart-page.js         # Dedicated cart page calculations & gift options
-│   └── checkout.js          # Checkout stepper, payment validation, & order generation
-└── README.md                # Project documentation
+│   ├── products.js     # Curated 16-product catalog
+│   └── store.js        # Unified cart, filtering, and page rendering logic
+└── README.md           # Documentation
 ```
 
 ---
 
-## 🌟 E-Commerce Functionalities & Criteria
+## 🌟 Key Features
 
-### 1. Multi-Criteria Filtering & Search (`shop.html`)
-- **Category Filter**: *Outerwear & Coats*, *Architectural Tailoring*, *Pure Cashmere & Knitwear*, *Raw Silk Dresses & Skirts*, and *Leather Goods & Accessories*.
-- **Silhouette Filter**: *All Silhouettes*, *Women's Edit*, *Men's Edit*, and *Unisex Foundations*.
-- **Material Provenance Filter**: *Grade-A Mongolian Cashmere*, *Biella 130s Virgin Wool*, *Sandwashed Mulberry Silk*, *Japanese Gabardine Cotton*, *Tuscan Calfskin*, and *Peruvian Baby Alpaca*.
-- **Color Palette Filter**: Visual swatch pills for *Ecru/Chalk*, *Noir/Charcoal*, *Camel/Umber*, and *Deep Ink Navy*.
-- **Size Filter**: Filter by *XS*, *S*, *M*, *L*, *XL*, *One Size*.
-- **Maximum Price Slider**: Real-time slider filter up to $1,500.
-- **In-Stock Availability**: Filter for immediate atelier dispatch.
-- **Active Filter Chips**: Dynamically generated tags with one-click individual dismissal and a "Reset All" button.
-- **URL Parameter Synchronization**: Links such as `shop.html?category=outerwear` or `shop.html?search=trench` automatically configure filters.
-- **Sorting**: *Featured First*, *Price: Low to High*, *Price: High to Low*, *Highest Rated*, and *New Season*.
-- **Grid Layout Density Switcher**: Toggle between a **3/4-Column Catalog Grid** and a **2-Column Editorial Spread**.
-- **Pagination**: Paginated navigation with previous, next, and numbered page controls.
+### 1. Storefront (`index.html`)
+- **Clean Header**: Sticky minimal navigation with logo and live shopping bag count.
+- **Category Tabs**: Filter between `All`, `Outerwear`, `Tailoring`, `Knitwear`, `Dresses`, and `Accessories`.
+- **Responsive Product Grid**: 4 columns on desktop, 3 on tablets, 2 on mobile devices.
+- **One-Click Add to Bag**: Instant feedback button that adds garments directly to the shopping cart.
 
-### 2. Product Detail Experience (`product.html?id=...`)
-- **Dynamic Routing**: Automatically loads any garment by ID (e.g. `product.html?id=wd-01` through `wd-16`).
-- **High-Resolution Gallery**: Multi-angle vertical thumbnail strip with smooth main image swap and hover magnification.
-- **Breadcrumb Navigation**: `Home / Shop / [Category] / [Garment Name]`.
-- **Interactive Size & Fit Guide**: Modal popup with an EU, IT, US, UK size conversion chart and centimetre/inch measurements.
-- **Stock Urgency Indicator**: Live inventory alerts (e.g., *"Only 3 items remaining in atelier stock"*).
-- **Quantity Selector**: Increment/decrement controls with instant line calculation.
-- **Direct Wishlist & Cart Actions**: Add to bag with loading animation and persistent wishlist toggling.
-- **Specification Accordions**: Expandable sections for *Composition & Weight (gsm)*, *Provenance & Tailoring*, *Model Fit Proportions*, and *Lifetime Care*.
-- **"Complete The Look" Recommendations**: Cross-sell suggestions pairing complementary garments.
-- **Client Appraisals & Reviews**: Overall rating score, verified collector reviews, and an interactive **"Submit an Appraisal"** form.
+### 2. Product Detail (`product.html?id=...`)
+- **Dynamic Routing**: Loads any product dynamically via `?id=` query parameter.
+- **Image Gallery**: Primary view with interactive thumbnail selector.
+- **Color & Size Selectors**: Visual color swatches and clear size buttons.
+- **Quantity Selector**: Increment/decrement items before adding to bag.
+- **Garment Specifications**: Clear composition, origin, and care instructions.
+- **Related Recommendations**: Curated cross-sell pieces at the bottom of the page.
 
-### 3. Shopping Bag & Checkout Flow
-- **Slide-Out Drawer & Dedicated Cart Page (`cart.html`)**: Line-item table, quantity changers, and trash removal.
-- **Free Shipping Progress Meter**: Dynamic live calculation towards the $350 complimentary shipping threshold.
-- **VIP Promo Discount Codes**:
-  - `WARDROBE10` — 10% VIP Discount
-  - `MINIMAL` — 15% Minimalist Capsule Discount
-  - `ATELIER` — 20% Private Archive Discount
-- **Packaging Customization**: Toggle complimentary sustainable packaging or request a handwritten calligraphy gift card.
-- **Multi-Step Checkout (`checkout.html`)**:
-  - *Step 1: Contact & Delivery Address* with validation.
-  - *Step 2: Courier Dispatch* (DHL Express Worldwide - Complimentary, White Glove Atelier Courier - $45, Boutique Pick-up).
-  - *Step 3: Payment Simulation* (Credit Card, Apple Pay mock, Klarna 3-installment calculation).
-- **Order Confirmation (`order-confirmation.html`)**:
-  - Unique generated Order ID (`#WD-XXXXXX`).
-  - Itemized receipt breakdown.
-  - Simulated DHL Express tracking waybill.
-  - One-click "Print Invoice" button.
+### 3. Shopping Bag (`cart.html`)
+- **Itemized Overview**: Shows product image, title, selected color, selected size, and unit price.
+- **Quantity Controls**: Adjust item counts or remove items with one click.
+- **Order Summary**: Subtotal, complimentary shipping notice, and estimated order total.
+- **Persistent State**: Cart items are automatically saved in `localStorage`.
+- **Friendly Empty State**: Helpful message and quick link back to shop when empty.
 
-### 4. Editorial Lookbook (`lookbook.html`)
-- Campaign Volume 04: *"The Architecture of Drape"*.
-- Full-bleed photographic spreads with **pulsing radar hotspots** positioned on models.
-- Hovering shows garment specs and prices; clicking navigates directly to the piece.
-- **"Add Full Look to Shopping Bag"** batch action.
-
-### 5. Brand Heritage & Salons (`atelier.html` & `contact.html`)
-- Dedicated **Atelier Manifesto** exploring zero-waste cutting, 3D seamless circular knitting, and lifetime repairs.
-- **Flagship Salons Directory**: Paris (Rue Saint-Honoré), Tokyo (Minami-Aoyama), New York (Mercer Street, SoHo), London (Mayfair), Zurich (Bahnhofstrasse).
-- **Private Appointment Booking Form**: Schedule a private salon fitting with a stylist.
-- **Client Concierge FAQ**: Expandable accordions covering deliveries, returns, and bespoke tailoring.
-
-### 6. Universal Utilities
-- **Multi-Currency Engine**: Instant live recalculation across **USD ($)**, **EUR (€)**, **GBP (£)**, and **JPY (¥)** across every page, cart, and modal.
-- **Quick Search Overlay**: Accessible anywhere via clicking **Search** or pressing <kbd>Cmd</kbd> + <kbd>K</kbd> / <kbd>Ctrl</kbd> + <kbd>K</kbd>.
-- **Offline Resilience**: Built-in SVG vector fallback generator so images gracefully render even without an active internet connection.
-
----
-
-## 🚀 How to Run & Preview
-
-Open any page directly in your browser without any build tools or installations:
-
-```bash
-# Simply double click index.html or run:
-index.html
-
-# Or using any static HTTP server:
-python -m http.server 8000
-# or
-npx serve .
-```
-
-Navigate across all pages using the header links:
-- [Home Storefront (`index.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/index.html)
-- [The Collection with Filter Sidebar (`shop.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/shop.html)
-- [Product Detail Page (`product.html?id=wd-01`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/product.html?id=wd-01)
-- [Editorial Lookbook (`lookbook.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/lookbook.html)
-- [The Atelier & Manifesto (`atelier.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/atelier.html)
-- [Shopping Bag (`cart.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/cart.html)
-- [Multi-Step Checkout (`checkout.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/checkout.html)
-- [Saved Wishlist (`wishlist.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/wishlist.html)
-- [Boutiques & Appointments (`contact.html`)](file:///c:/Users/capta/OneDrive/Documents/github/Wardrobe/contact.html)
+### 4. Robust Design
+- **Zero Heavy Dependencies**: Pure system sans-serif font stack and vanilla JavaScript.
+- **Graceful Fallbacks**: Built-in SVG vector generator ensures images always render even when offline.
+- **Adobe Launch Integrated**: Script tag included across all HTML `<head>` tags.

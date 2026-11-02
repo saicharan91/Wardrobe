@@ -3,13 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Bag — WARDROBE Atelier</title>
-  <meta name="description" content="Review your curated wardrobe pieces, packaging customizations, and delivery selections.">
-  <meta name="theme-color" content="#121212">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Shopping Bag — WARDROBE</title>
+  <meta name="description" content="Review your shopping bag and checkout.">
   <link rel="stylesheet" href="css/styles.css">
 
   <!-- Adobe Experience Platform Launch -->
@@ -17,276 +12,41 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <aside class="announcement-bar">
-    <div class="announcement-left">
-      <span class="ticker-dot"></span>
-      <span>Complimentary Worldwide Express on Orders Over $350</span>
-    </div>
-    <div class="announcement-center">
-      <span>Atelier Private Concierge Services</span>
-    </div>
-    <div class="announcement-right">
-      <div class="currency-select-wrap">
-        <label for="currencySelectTop" class="eyebrow" style="color: #9C9A96; font-size: 0.65rem;">Currency:</label>
-        <select id="currencySelectTop" class="currency-select">
-          <option value="USD">USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-          <option value="GBP">GBP (£)</option>
-          <option value="JPY">JPY (¥)</option>
-        </select>
-      </div>
-      <a href="contact.html" style="font-size: 0.72rem; letter-spacing: 0.12em; color: #BBB7AF;">Concierge</a>
-    </div>
-  </aside>
-
-  <!-- Navigation Header -->
+  <!-- Minimal Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <nav class="nav-desktop">
-        <a href="shop.html" class="nav-link">Collection</a>
-        <a href="lookbook.html" class="nav-link">Lookbook</a>
-        <a href="atelier.html" class="nav-link">The Atelier</a>
-        <a href="contact.html" class="nav-link">Boutiques</a>
-      </nav>
-
-      <div class="brand-logo">
-        <a href="index.html">
-          <span class="brand-title">W A R D R O B E</span>
-          <span class="brand-subtitle">Atelier de Haute Confection</span>
+      <a href="index.html" class="brand-logo" aria-label="WARDROBE Home">WARDROBE</a>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="cart-link-btn" aria-label="View Shopping Bag">
+          <span>Bag</span>
+          <span class="cart-badge" id="cartBadge">0</span>
         </a>
-      </div>
-
-      <div class="header-actions">
-        <button class="action-btn" id="searchBtn" aria-label="Search garments (Cmd+K)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span class="action-label-desktop">Search</span>
-        </button>
-        <button class="action-btn" id="wishlistBtn" aria-label="View Saved Items">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="action-count" id="wishlistCount">0</span>
-        </button>
-        <button class="action-btn" id="cartBtn" aria-label="Shopping Bag">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span class="action-count" id="cartCount">0</span>
-        </button>
-        <button class="action-btn mobile-menu-btn" id="mobileMenuBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <div class="container">
-      <div class="breadcrumbs">
-        <a href="index.html">Home</a>
-        <span class="separator">/</span>
-        <span class="current">Shopping Bag</span>
-      </div>
+  <!-- Cart Page Main -->
+  <main class="container">
+    <div class="cart-title-row">
+      <h1>Shopping Bag</h1>
+    </div>
 
-      <div style="padding: 2rem 0 1rem;">
-        <h1 style="font-family: var(--font-serif); font-size: clamp(2.4rem, 4vw, 3.5rem); font-weight: 300;">Your Curated Bag</h1>
-      </div>
-
-      <!-- Empty State -->
-      <div id="cartPageEmptyState" style="display: none; text-align: center; padding: 6rem 1rem;">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin: 0 auto 1.5rem; color: var(--text-muted);"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <h3 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem;">Your shopping bag is empty</h3>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Discover our architectural outerwear, tailoring, and cashmere essentials.</p>
-        <a href="shop.html" class="btn-primary">Explore The Collection</a>
-      </div>
-
-      <!-- Main Cart Content Grid -->
-      <div class="cart-page-layout" id="cartPageContentGrid">
-        
-        <!-- Left: Items Table & Customization Options -->
-        <div>
-          <table class="cart-table">
-            <thead>
-              <tr>
-                <th>Garment</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="cartTableBody"></tbody>
-          </table>
-
-          <!-- Packaging & Atelier Touches -->
-          <div style="margin-top: 3.5rem; padding: 2rem; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm);">
-            <h4 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 1rem;">Atelier Packaging & Notes</h4>
-            
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <label class="filter-checkbox-label">
-                <input type="checkbox" checked />
-                <span>Complimentary Sustainable Packaging (Unbleached organic cotton dust bag & FSC tissue)</span>
-              </label>
-
-              <label class="filter-checkbox-label">
-                <input type="checkbox" id="giftNoteCheckbox" onchange="document.getElementById('giftNoteField').style.display = this.checked ? 'block' : 'none';" />
-                <span>Include Complimentary Calligraphy Handwritten Gift Card</span>
-              </label>
-
-              <div id="giftNoteField" style="display: none; margin-top: 0.5rem;">
-                <textarea rows="3" placeholder="Enter your personalized message for the recipient..." style="width: 100%; font-size: 0.85rem;"></textarea>
-              </div>
-            </div>
-          </div>
-
-          <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-            <a href="shop.html" class="section-link">← Continue Selecting Garments</a>
-          </div>
-        </div>
-
-        <!-- Right: Order Financials & Checkout CTA -->
-        <aside class="cart-summary-box">
-          <h3 style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-light);">Order Summary</h3>
-
-          <!-- Promo Input -->
-          <div class="promo-form">
-            <input type="text" id="cartPagePromoInput" placeholder="Promo code (e.g. WARDROBE10)" />
-            <button type="button" id="cartPagePromoApplyBtn">Apply</button>
-          </div>
-
-          <!-- Courier Selection -->
-          <div>
-            <span class="eyebrow" style="margin-bottom: 0.6rem; display: block;">Select Courier:</span>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-              <label class="filter-checkbox-label" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
-                <input type="radio" name="cartCourierOption" value="0" checked />
-                <div style="font-size: 0.82rem;">
-                  <strong>DHL Express Worldwide</strong>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Carbon Neutral • 2–3 Days</div>
-                </div>
-                <span style="margin-left: auto; font-family: var(--font-mono); font-size: 0.8rem;">Complimentary</span>
-              </label>
-
-              <label class="filter-checkbox-label" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
-                <input type="radio" name="cartCourierOption" value="45" />
-                <div style="font-size: 0.82rem;">
-                  <strong>White Glove Atelier Delivery</strong>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Garment bag & hanger delivery</div>
-                </div>
-                <span style="margin-left: auto; font-family: var(--font-mono); font-size: 0.8rem;">+$45.00</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Financial Breakdown -->
-          <div class="summary-rows" style="border-top: 1px solid var(--border-light); padding-top: 1rem;">
-            <div class="summary-row">
-              <span>Merchandise Subtotal</span>
-              <span id="cartPageSubtotal">$0.00</span>
-            </div>
-            <div class="summary-row" id="cartPageDiscountRow" style="display: none; color: var(--accent-terracotta);">
-              <span>VIP Privilege Discount</span>
-              <span id="cartPageDiscountAmt">-$0.00</span>
-            </div>
-            <div class="summary-row">
-              <span>Estimated Shipping</span>
-              <span id="cartPageShipping">Complimentary</span>
-            </div>
-            <div class="summary-row">
-              <span>Estimated Duty & Tax</span>
-              <span id="cartPageTax">$0.00</span>
-            </div>
-            <div class="summary-row total-row">
-              <span>Estimated Total</span>
-              <span id="cartPageTotal">$0.00</span>
-            </div>
-          </div>
-
-          <a href="checkout.html" class="btn-primary" style="width: 100%; justify-content: center; padding: 1.15rem; font-size: 0.85rem;">
-            Proceed to Secure Checkout →
-          </a>
-
-          <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.25rem;">
-            <span>Encrypted 256-Bit SSL Checkout Protection</span>
-            <span>Accepted: Visa, Mastercard, American Express, Apple Pay, Klarna</span>
-          </div>
-        </aside>
-
-      </div>
+    <div id="cartPageContainer">
+      <!-- Rendered dynamically by store.js -->
     </div>
   </main>
 
-  <!-- Global Footer -->
+  <!-- Minimal Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <h4>W A R D R O B E</h4>
-          <p>An independent design studio dedicated to enduring garments, pure natural materials, and quiet architectural presence.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Boutiques</h5>
-          <ul>
-            <li><a href="contact.html">Paris — Rue Saint-Honoré</a></li>
-            <li><a href="contact.html">Tokyo — Minami-Aoyama</a></li>
-            <li><a href="contact.html">New York — Mercer Street</a></li>
-            <li><a href="contact.html">London — Mayfair</a></li>
-            <li><a href="contact.html">Zurich — Bahnhofstrasse</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Client Concierge</h5>
-          <ul>
-            <li><a href="contact.html">Book Private Fitting</a></li>
-            <li><a href="atelier.html">Garment Care & Repair</a></li>
-            <li><a href="contact.html">Returns & Deliveries</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>The Maison</h5>
-          <ul>
-            <li><a href="atelier.html">Traceability Manifesto</a></li>
-            <li><a href="lookbook.html">Editorial Lookbook</a></li>
-            <li><a href="shop.html">Permanent Collection</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>&copy; 2026 WARDROBE ATELIER INC. ALL RIGHTS RESERVED.</div>
-        <button class="back-to-top" id="backToTopBtn">Back to Top ↑</button>
-      </div>
+    <div class="container footer-inner">
+      <span>&copy; 2026 WARDROBE. All rights reserved.</span>
+      <span>Complimentary Worldwide Express Shipping</span>
     </div>
   </footer>
 
-  <!-- Slide-out Drawers & Overlay -->
-  <div class="drawer-backdrop" id="cartBackdrop"></div>
-  <aside class="side-drawer" id="cartDrawer"></aside>
-
-  <div class="drawer-backdrop" id="wishlistBackdrop"></div>
-  <aside class="side-drawer" id="wishlistDrawer">
-    <div class="drawer-header"><h3 class="drawer-title">Saved Wishlist</h3><button class="drawer-close-btn" id="wishlistCloseBtn">✕</button></div>
-    <div class="drawer-body" id="wishlistItemsList"></div>
-  </aside>
-
-  <div class="search-overlay" id="searchOverlay">
-    <div class="search-header"><span class="eyebrow">Atelier Index Search</span><button class="action-btn" id="searchCloseBtn">✕</button></div>
-    <div class="search-input-wrap"><input type="search" class="search-input-field" id="searchInput" placeholder="Type to search garments..." /><div class="search-results-grid" id="searchResults"></div></div>
-  </div>
-
-  <div class="mobile-nav-drawer" id="mobileNavDrawer">
-    <div style="display: flex; justify-content: space-between; align-items: center;"><span class="brand-title">W A R D R O B E</span><button id="mobileNavClose">✕</button></div>
-    <div class="mobile-nav-links">
-      <a href="index.html" class="mobile-nav-link">Home</a>
-      <a href="shop.html" class="mobile-nav-link">Collection</a>
-      <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
-      <a href="atelier.html" class="mobile-nav-link">The Atelier</a>
-      <a href="contact.html" class="mobile-nav-link">Boutiques</a>
-    </div>
-  </div>
-
-  <div class="toast-container" id="toastContainer"></div>
-
   <!-- Scripts -->
   <script src="js/products.js"></script>
-  <script src="js/core.js"></script>
-  <script src="js/cart-page.js"></script>
+  <script src="js/store.js"></script>
 </body>
 </html>
-
