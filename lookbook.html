@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Lookbook — WARDROBE Atelier</title>
+  <meta name="description" content="Edition 04: The Sculpture of Restraint. A visual dialogue between pure natural cloth and architectural space.">
+  <meta name="theme-color" content="#121212">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar">
+    <div class="announcement-left"><span class="ticker-dot"></span><span>Complimentary Worldwide Express on Orders Over $350</span></div>
+    <div class="announcement-center"><span>Edition 04 / Editorial Campaign</span></div>
+    <div class="announcement-right">
+      <div class="currency-select-wrap">
+        <label for="currencySelectTop" class="eyebrow" style="color: #9C9A96; font-size: 0.65rem;">Currency:</label>
+        <select id="currencySelectTop" class="currency-select">
+          <option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="JPY">JPY (¥)</option>
+        </select>
+      </div>
+      <a href="contact.html" style="font-size: 0.72rem; letter-spacing: 0.12em; color: #BBB7AF;">Concierge</a>
+    </div>
+  </aside>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <nav class="nav-desktop">
+        <a href="shop.html" class="nav-link">Collection</a>
+        <a href="lookbook.html" class="nav-link active">Lookbook</a>
+        <a href="atelier.html" class="nav-link">The Atelier</a>
+        <a href="contact.html" class="nav-link">Boutiques</a>
+      </nav>
+
+      <div class="brand-logo">
+        <a href="index.html">
+          <span class="brand-title">W A R D R O B E</span>
+          <span class="brand-subtitle">Atelier de Haute Confection</span>
+        </a>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn" id="searchBtn" aria-label="Search garments (Cmd+K)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="action-label-desktop">Search</span>
+        </button>
+        <button class="action-btn" id="wishlistBtn" aria-label="View Saved Items">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="action-count" id="wishlistCount">0</span>
+        </button>
+        <button class="action-btn" id="cartBtn" aria-label="Shopping Bag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="action-count" id="cartCount">0</span>
+        </button>
+        <button class="action-btn mobile-menu-btn" id="mobileMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="separator">/</span>
+        <span class="current">Editorial Lookbook</span>
+      </div>
+
+      <section class="lookbook-page-hero">
+        <span class="eyebrow" style="color: var(--accent-umber); margin-bottom: 0.5rem; display: block;">Campaign Volume 04</span>
+        <h1>The Architecture of Drape</h1>
+        <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; font-weight: 300;">
+          Photographed against monolithic brutalist limestone in Paris and Kyoto. An exploration of unconstructed fluidity anchored by Savile Row and Biella wool canvassing.
+        </p>
+      </section>
+
+      <!-- Lookbook Spread Items -->
+      <section id="lookbookSpreadsList">
+        <!-- Injected by JS with interactive hotspots -->
+      </section>
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h4>W A R D R O B E</h4>
+          <p>An independent design studio dedicated to enduring garments, pure natural materials, and quiet architectural presence.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Boutiques</h5>
+          <ul>
+            <li><a href="contact.html">Paris — Rue Saint-Honoré</a></li>
+            <li><a href="contact.html">Tokyo — Minami-Aoyama</a></li>
+            <li><a href="contact.html">New York — Mercer Street</a></li>
+            <li><a href="contact.html">London — Mayfair</a></li>
+            <li><a href="contact.html">Zurich — Bahnhofstrasse</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Client Concierge</h5>
+          <ul>
+            <li><a href="cart.html">View Shopping Bag</a></li>
+            <li><a href="contact.html">Book Private Fitting</a></li>
+            <li><a href="atelier.html">Garment Care & Repair</a></li>
+            <li><a href="contact.html">Returns & Deliveries</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>The Maison</h5>
+          <ul>
+            <li><a href="atelier.html">Traceability Manifesto</a></li>
+            <li><a href="lookbook.html">Editorial Lookbook</a></li>
+            <li><a href="shop.html">Permanent Collection</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 WARDROBE ATELIER INC. ALL RIGHTS RESERVED.</div>
+        <button class="back-to-top" id="backToTopBtn">Back to Top ↑</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-out Drawers -->
+  <div class="drawer-backdrop" id="cartBackdrop"></div>
+  <aside class="side-drawer" id="cartDrawer"></aside>
+
+  <div class="drawer-backdrop" id="wishlistBackdrop"></div>
+  <aside class="side-drawer" id="wishlistDrawer">
+    <div class="drawer-header"><h3 class="drawer-title">Saved Wishlist</h3><button class="drawer-close-btn" id="wishlistCloseBtn">✕</button></div>
+    <div class="drawer-body" id="wishlistItemsList"></div>
+  </aside>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header"><span class="eyebrow">Atelier Index Search</span><button class="action-btn" id="searchCloseBtn">✕</button></div>
+    <div class="search-input-wrap"><input type="search" class="search-input-field" id="searchInput" placeholder="Type to search garments..." /><div class="search-results-grid" id="searchResults"></div></div>
+  </div>
+
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div style="display: flex; justify-content: space-between; align-items: center;"><span class="brand-title">W A R D R O B E</span><button id="mobileNavClose">✕</button></div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Collection</a>
+      <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
+      <a href="atelier.html" class="mobile-nav-link">The Atelier</a>
+      <a href="contact.html" class="mobile-nav-link">Boutiques</a>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/core.js"></script>
+  <script>
+    (function() {
+      const container = document.getElementById('lookbookSpreadsList');
+      if (!container) return;
+
+      function renderSpreads() {
+        container.innerHTML = LOOKBOOK.map((look, idx) => `
+          <article class="lookbook-spread-card">
+            <div class="lookbook-viewer" style="position: relative; aspect-ratio: 4 / 5;">
+              <img src="${look.image}" alt="${look.title}" class="lookbook-image" onerror="this.onerror=null; this.src='${Wardrobe.getPlaceholderSvg(look.title, 'Editorial Look')}';" />
+              ${look.items.map(item => `
+                <div class="lookbook-hotspot" style="left: ${item.x}%; top: ${item.y}%;" onclick="window.location.href='product.html?id=${item.id}'">
+                  <span class="hotspot-tooltip">${item.label} — ${Wardrobe.formatMoney(item.price)}</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+                </div>
+              `).join('')}
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+              <span class="eyebrow" style="color: var(--accent-umber); margin-bottom: 0.5rem;">LOOK 0${idx + 1} OF 0${LOOKBOOK.length}</span>
+              <h2 style="font-family: var(--font-serif); font-size: clamp(2rem, 3.2vw, 2.8rem); font-weight: 400; margin-bottom: 0.75rem;">${look.title}</h2>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">${look.subtitle}</p>
+              
+              <blockquote style="font-style: italic; border-left: 2px solid var(--border-medium); padding-left: 1.25rem; margin-bottom: 2rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+                “${look.editorialNote}”
+              </blockquote>
+
+              <span class="eyebrow" style="margin-bottom: 0.75rem;">Pieces in this Ensemble:</span>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem;">
+                ${look.items.map(item => `
+                  <a href="product.html?id=${item.id}" class="look-item-card" style="text-decoration: none;">
+                    <div>
+                      <h4 class="look-item-title">${item.label}</h4>
+                      <span class="eyebrow">Inspect Cut & Fabric →</span>
+                    </div>
+                    <span class="look-item-price">${Wardrobe.formatMoney(item.price)}</span>
+                  </a>
+                `).join('')}
+              </div>
+
+              <button class="btn-primary" data-add-look="${look.id}" style="justify-content: center;">
+                Add Full Look to Shopping Bag
+              </button>
+            </div>
+          </article>
+        `).join('');
+
+        container.querySelectorAll('[data-add-look]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const lookId = btn.dataset.addLook;
+            const look = LOOKBOOK.find(l => l.id === lookId);
+            if (look) {
+              look.items.forEach(it => {
+                const p = PRODUCTS.find(prod => prod.id === it.id);
+                if (p) Wardrobe.addToCart(p);
+              });
+              Wardrobe.showToast(`Added all items from "${look.title}" to Bag!`, 'View Bag', Wardrobe.openCartDrawer);
+            }
+          });
+        });
+      }
+
+      renderSpreads();
+      window.addEventListener('wardrobe:currency-changed', renderSpreads);
+    })();
+  </script>
+</body>
+</html>
+

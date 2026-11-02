@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Wishlist — WARDROBE Atelier</title>
+  <meta name="description" content="Review your favorited and curated pieces from WARDROBE Atelier.">
+  <meta name="theme-color" content="#121212">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar">
+    <div class="announcement-left"><span class="ticker-dot"></span><span>Complimentary Worldwide Express on Orders Over $350</span></div>
+    <div class="announcement-center"><span>Personal Curation & Saved Pieces</span></div>
+    <div class="announcement-right">
+      <div class="currency-select-wrap">
+        <label for="currencySelectTop" class="eyebrow" style="color: #9C9A96; font-size: 0.65rem;">Currency:</label>
+        <select id="currencySelectTop" class="currency-select">
+          <option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="JPY">JPY (¥)</option>
+        </select>
+      </div>
+      <a href="contact.html" style="font-size: 0.72rem; letter-spacing: 0.12em; color: #BBB7AF;">Concierge</a>
+    </div>
+  </aside>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <nav class="nav-desktop">
+        <a href="shop.html" class="nav-link">Collection</a>
+        <a href="lookbook.html" class="nav-link">Lookbook</a>
+        <a href="atelier.html" class="nav-link">The Atelier</a>
+        <a href="contact.html" class="nav-link">Boutiques</a>
+      </nav>
+
+      <div class="brand-logo">
+        <a href="index.html">
+          <span class="brand-title">W A R D R O B E</span>
+          <span class="brand-subtitle">Atelier de Haute Confection</span>
+        </a>
+      </div>
+
+      <div class="header-actions">
+        <button class="action-btn" id="searchBtn" aria-label="Search garments (Cmd+K)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="action-label-desktop">Search</span>
+        </button>
+        <button class="action-btn active" id="wishlistBtn" aria-label="View Saved Items">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="action-count" id="wishlistCount">0</span>
+        </button>
+        <button class="action-btn" id="cartBtn" aria-label="Shopping Bag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="action-count" id="cartCount">0</span>
+        </button>
+        <button class="action-btn mobile-menu-btn" id="mobileMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container" style="padding-bottom: 6rem;">
+      <div class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="separator">/</span>
+        <span class="current">Saved Wishlist</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 2rem 0; border-bottom: 1px solid var(--border-light); margin-bottom: 3rem;">
+        <div>
+          <span class="eyebrow">Personal Archives</span>
+          <h1 style="font-family: var(--font-serif); font-size: clamp(2.4rem, 4vw, 3.5rem); font-weight: 300;">Saved Pieces</h1>
+        </div>
+        <button class="btn-secondary" id="wishlistMoveAllBtn">Move All to Bag</button>
+      </div>
+
+      <!-- Wishlist Grid -->
+      <div class="products-grid" id="fullWishlistGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
+
+      <!-- Empty State -->
+      <div id="fullWishlistEmptyState" style="display: none; text-align: center; padding: 6rem 1rem;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin: 0 auto 1.5rem; color: var(--text-muted);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <h3 style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem;">Your wishlist is currently empty</h3>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Save your favorite silhouettes and fabrications to return to them at your leisure.</p>
+        <a href="shop.html" class="btn-primary">Explore The Collection</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h4>W A R D R O B E</h4>
+          <p>An independent design studio dedicated to enduring garments, pure natural materials, and quiet architectural presence.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Boutiques</h5>
+          <ul>
+            <li><a href="contact.html">Paris — Rue Saint-Honoré</a></li>
+            <li><a href="contact.html">Tokyo — Minami-Aoyama</a></li>
+            <li><a href="contact.html">New York — Mercer Street</a></li>
+            <li><a href="contact.html">London — Mayfair</a></li>
+            <li><a href="contact.html">Zurich — Bahnhofstrasse</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Client Concierge</h5>
+          <ul>
+            <li><a href="cart.html">View Shopping Bag</a></li>
+            <li><a href="contact.html">Book Private Fitting</a></li>
+            <li><a href="atelier.html">Garment Care & Repair</a></li>
+            <li><a href="contact.html">Returns & Deliveries</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>The Maison</h5>
+          <ul>
+            <li><a href="atelier.html">Traceability Manifesto</a></li>
+            <li><a href="lookbook.html">Editorial Lookbook</a></li>
+            <li><a href="shop.html">Permanent Collection</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 WARDROBE ATELIER INC. ALL RIGHTS RESERVED.</div>
+        <button class="back-to-top" id="backToTopBtn">Back to Top ↑</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-out Drawers -->
+  <div class="drawer-backdrop" id="cartBackdrop"></div>
+  <aside class="side-drawer" id="cartDrawer"></aside>
+
+  <div class="drawer-backdrop" id="wishlistBackdrop"></div>
+  <aside class="side-drawer" id="wishlistDrawer"></aside>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header"><span class="eyebrow">Atelier Index Search</span><button class="action-btn" id="searchCloseBtn">✕</button></div>
+    <div class="search-input-wrap"><input type="search" class="search-input-field" id="searchInput" placeholder="Type to search garments..." /><div class="search-results-grid" id="searchResults"></div></div>
+  </div>
+
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div style="display: flex; justify-content: space-between; align-items: center;"><span class="brand-title">W A R D R O B E</span><button id="mobileNavClose">✕</button></div>
+    <div class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Collection</a>
+      <a href="lookbook.html" class="mobile-nav-link">Lookbook</a>
+      <a href="atelier.html" class="mobile-nav-link">The Atelier</a>
+      <a href="contact.html" class="mobile-nav-link">Boutiques</a>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/core.js"></script>
+  <script>
+    (function() {
+      const grid = document.getElementById('fullWishlistGrid');
+      const emptyState = document.getElementById('fullWishlistEmptyState');
+      const moveAllBtn = document.getElementById('wishlistMoveAllBtn');
+
+      function renderFullWishlist() {
+        if (!grid) return;
+        if (Wardrobe.state.wishlist.length === 0) {
+          grid.style.display = 'none';
+          if (emptyState) emptyState.style.display = 'block';
+          if (moveAllBtn) moveAllBtn.style.display = 'none';
+          return;
+        }
+
+        grid.style.display = 'grid';
+        if (emptyState) emptyState.style.display = 'none';
+        if (moveAllBtn) moveAllBtn.style.display = 'inline-flex';
+
+        grid.innerHTML = Wardrobe.state.wishlist.map(p => `
+          <article class="product-card">
+            <div class="product-media">
+              <a href="product.html?id=${p.id}">
+                <img class="product-img" src="${p.images[0]}" alt="${p.name}" onerror="this.onerror=null; this.src='${Wardrobe.getPlaceholderSvg(p.name, p.category)}';" />
+              </a>
+              <button class="wishlist-btn active" data-remove-wish="${p.id}" title="Remove from Wishlist">
+                ✕
+              </button>
+            </div>
+            <div class="product-info">
+              <a href="product.html?id=${p.id}" class="product-name">${p.name}</a>
+              <p class="product-subtitle">${p.subtitle}</p>
+              <div class="product-footer-row">
+                <span class="product-price">${Wardrobe.formatMoney(p.price)}</span>
+                <button class="btn-primary" style="padding: 0.4rem 0.85rem; font-size: 0.68rem;" data-add-wish-cart="${p.id}">
+                  Add to Bag
+                </button>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        grid.querySelectorAll('[data-remove-wish]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            Wardrobe.toggleWishlist(btn.dataset.removeWish);
+            renderFullWishlist();
+          });
+        });
+
+        grid.querySelectorAll('[data-add-wish-cart]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const p = PRODUCTS.find(prod => prod.id === btn.dataset.addWishCart);
+            if (p) {
+              Wardrobe.addToCart(p);
+            }
+          });
+        });
+      }
+
+      if (moveAllBtn) {
+        moveAllBtn.addEventListener('click', () => {
+          Wardrobe.state.wishlist.forEach(p => {
+            Wardrobe.addToCart(p);
+          });
+          Wardrobe.showToast('All saved pieces added to your shopping bag!', 'View Bag', Wardrobe.openCartDrawer);
+        });
+      }
+
+      renderFullWishlist();
+      window.addEventListener('wardrobe:currency-changed', renderFullWishlist);
+      window.addEventListener('wardrobe:wishlist-updated', renderFullWishlist);
+    })();
+  </script>
+</body>
+</html>
+
